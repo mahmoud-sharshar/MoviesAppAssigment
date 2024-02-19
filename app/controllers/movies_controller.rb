@@ -1,11 +1,11 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: %i[ show edit update destroy ]
+  before_action :set_movie, only: %i[ show destroy ]
 
   # GET /movies or /movies.json
   def index
     actor_name = params[:actor]
     if actor_name
-      @movies = Movie.where("actor_name LIKE ?", Movie.sanitize_sql_like(params[:actor]) + "%")
+      @movies = Movie.search_by_actor(params[:actor])
     else
       @movies = Movie.all
     end
@@ -21,10 +21,6 @@ class MoviesController < ApplicationController
     @movie = Movie.new
   end
 
-  # GET /movies/1/edit
-  def edit
-  end
-
   # POST /movies or /movies.json
   def create
     @movie = Movie.new(movie_params)
@@ -35,19 +31,6 @@ class MoviesController < ApplicationController
         format.json { render :show, status: :created, location: @movie }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @movie.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /movies/1 or /movies/1.json
-  def update
-    respond_to do |format|
-      if @movie.update(movie_params)
-        format.html { redirect_to movie_url(@movie), notice: "Movie was successfully updated." }
-        format.json { render :show, status: :ok, location: @movie }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @movie.errors, status: :unprocessable_entity }
       end
     end

@@ -1,24 +1,15 @@
-# README
+# Movies App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Dependecies
+- Ruby version 3.3
+- Rails version 7.1
+- Sqlite
 
-Things you may want to cover:
+### Database creation
+Run this command: `rails db:migration`
 
-* Ruby version
+### Database initialization
+Run this command: `rails import:movies_and_reviews`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### How to run the test suite
+Run this command `rails test`

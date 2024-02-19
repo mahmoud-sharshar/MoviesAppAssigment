@@ -4,10 +4,7 @@ class CreateMovies < ActiveRecord::Migration[7.1]
       t.string :name
       t.string :description
       t.string :year
-      t.string :director_name
-      t.string :actor_name
-      t.string :filming_location
-      t.string :country
+      t.references :director, null: true, foreign_key: { to_table: :users }
 
       t.timestamps
     end

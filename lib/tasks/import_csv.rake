@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 namespace :import do
   desc "Import movies and reviews from CSV files"
@@ -8,7 +8,7 @@ namespace :import do
 
     # Import movies
     puts "Importing movies..."
-    import_movies(movies_csv_path)  
+    import_movies(movies_csv_path)
 
     # Import reviews
     puts "Importing reviews..."
@@ -20,22 +20,25 @@ namespace :import do
   private
 
   def import_movies(file_path)
-    movies = []
+    movies = {}
     CSV.foreach(file_path, headers: true) do |row|
-      movie_params = row.to_hash.slice("Movie", "Description", "Year", "Director", "Actor", "Filming location", "Country")
-      movies << {
-        name: movie_params["Movie"],
-        description: movie_params["Description"],
-        year: movie_params["Year"],
-        director_name: movie_params["Director"],
-        actor_name: movie_params["Actor"],
-        filming_location: movie_params["Filming location"],
-        country: movie_params["Country"]
-      }
+      movie = Movie.find_or_create_by(name: row['Movie'], description: row['Description'], year: row['Year'])
+      
+      # Assuming Director and Actor are Users
+      director = User.find_or_create_by(name: row['Director'], role: 'director')
+      actor = User.find_or_create_by(name: row['Actor'], role: 'actor')
+      
+      movie.director = director
+      movie.save
+      
+      location = MovieLocation.find_or_create_by(city: row['Filming location'], country: row['Country'], movie: movie)
+      
+      # Associate the actor with the location
+      location.actors << actor
+      location.save
     end
-    Movie.import(movies)
-    rescue StandardError => e
-      log_error("Error importing movies:", e)
+  rescue StandardError => e
+    log_error("Error importing movies:", e)
   end
 
   def import_reviews(file_path)
@@ -47,13 +50,12 @@ namespace :import do
         movie_id: movie&.id,
         user_name: review_params["User"],
         star: review_params["Stars"],
-        review: review_params["Review"]
+        review: review_params["Review"],
       }
     end
     Review.import(reviews)
-    
-    rescue StandardError => e
-      log_error("Error importing review:", e)
+  rescue StandardError => e
+    log_error("Error importing review:", e)
   end
 
   def log_error(message, error)

@@ -2,9 +2,7 @@
   <div class="movie-card-header">
     <h2><%= movie.name %></h2>
     <p>
-      <% if request.path == movie_path(movie) %>
-        <%= link_to "Edit this movie", edit_movie_path(@movie), class: "movie-button" %>
-      <% else %>
+      <% if request.path != movie_path(movie) %>
         <%= link_to "Show this movie", movie, class: "movie-button" %>
       <% end %>
     </p>
@@ -14,9 +12,8 @@
     <p><strong>Rating:</strong> <%= movie.average_stars %></p>
     <p><strong>Description:</strong> <%= movie.description %></p>
     <p><strong>Year:</strong> <%= movie.year %></p>
-    <p><strong>Director:</strong> <%= movie.director_name %></p>
-    <p><strong>Actor:</strong> <%= movie.actor_name %></p>
-    <p><strong>Filming location:</strong> <%= movie.filming_location %></p>
-    <p><strong>Country:</strong> <%= movie.country %></p>
+    <p><strong>Director:</strong> <%= movie.director.name %></p>
+    <p><strong>locations:</strong> <%= movie.locations.map{|m| "#{m.city}, #{m.country}"}.uniq.join(" & ") %></p>
+    <p><strong>Actors:</strong> <%= movie.actors.pluck(:name).uniq.join(", ") %></p>
   </div>
 </div>
