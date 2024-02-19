@@ -1,0 +1,17 @@
+<div id="<%= dom_id movie %>" class="movie-card">
+  <div class="movie-card-header">
+    <h2><%= movie.name %></h2>
+    <p>
+      <%= link_to "Show this movie", movie, class: "new-movie-button"%>
+    </p>
+  </div>
+
+  <div class="movie-card-body">
+    <p><strong>Description:</strong> <%= movie.description %></p>
+    <p><strong>Year:</strong> <%= movie.year %></p>
+    <p><strong>Director:</strong> <%= movie.director_name %></p>
+    <p><strong>Actor:</strong> <%= movie.actor_name %></p>
+    <p><strong>Filming location:</strong> <%= movie.filming_location %></p>
+    <p><strong>Country:</strong> <%= movie.country %></p>
+  </div>
+</div>
