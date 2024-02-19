@@ -3,7 +3,12 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.where("actor_name LIKE ?", Movie.sanitize_sql_like(params[:actor]) + "%")
+    actor_name = params[:actor]
+    if actor_name
+      @movies = Movie.where("actor_name LIKE ?", Movie.sanitize_sql_like(params[:actor]) + "%")
+    else
+      @movies = Movie.all
+    end
   end
 
   # GET /movies/1 or /movies/1.json
