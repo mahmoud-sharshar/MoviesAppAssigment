@@ -1,5 +1,5 @@
 class Movie < ApplicationRecord
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
 
   def self.sorted_by_average_stars
     left_joins(:reviews)

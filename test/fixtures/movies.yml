@@ -1,0 +1,17 @@
+one:
+  name: Movie 1
+  description: This is a test movei
+  year: 2022
+  director_name: Mahmoud
+  actor_name: Hamed
+  filming_location: Cairo
+  country: Egypt
+
+two:
+  name: Movie 2
+  description: This is a test movei
+  year: 2023
+  director_name: Mohamed
+  actor_name: Hamed
+  filming_location: Cairo
+  country: Egypt
