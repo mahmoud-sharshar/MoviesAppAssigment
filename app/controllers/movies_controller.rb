@@ -9,6 +9,7 @@ class MoviesController < ApplicationController
     else
       @movies = Movie.all
     end
+    @movies = @movies.sorted_by_average_stars
   end
 
   # GET /movies/1 or /movies/1.json
