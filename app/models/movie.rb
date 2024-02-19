@@ -7,4 +7,8 @@ class Movie < ApplicationRecord
       .select("movies.*, AVG(reviews.star) AS average_stars")
       .order("AVG(reviews.star) DESC")
   end
+
+  def average_stars
+    reviews.average(:star)
+  end
 end

@@ -2,7 +2,11 @@
   <div class="movie-card-header">
     <h2><%= movie.name %></h2>
     <p>
-      <%= link_to "Show this movie", movie, class: "new-movie-button"%>
+      <% if request.path == movie_path(movie) %>
+        <%= link_to "Edit this movie", edit_movie_path(@movie), class: "movie-button" %>
+      <% else %>
+        <%= link_to "Show this movie", movie, class: "movie-button" %>
+      <% end %>
     </p>
   </div>
 
